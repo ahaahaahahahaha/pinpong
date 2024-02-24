@@ -83,16 +83,17 @@ background = transform.scale(image.load(img_back), (win_width, win_height))
 
 
 
+speed_x = 3
+speed_y = 3
 
 
 
-
-ship = Player(img_hero, 30, 200, 4, 50, 150)
-ship1 = Player(img_hero, 520, 200, 4, 50, 150)
+ship = Player(img_hero, 30, 200, 50, 200, 10)
+ship1 = Player(img_hero, 600, 200, 50, 200, 10)
 ball = GameSprite(img_ball, 250, 250, 50, 50, 10)
 
 
-clock = time.Clock
+clock = time.Clock()
 game = True
 finish = False
 
@@ -113,13 +114,16 @@ while game:
        #производим движения спрайтов
         ship.update_1()
         ship1.update_2()
-    
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y    
 
-
-       #обновляем их в новом местоположении при каждой итерации цикла
+        if sprite.collide_rect(ship, ball) or sprite.collide_rect(ship1, ball):
+            speed_x *= -1
+        if ball.rect.y > 450 or ball.rect.y < 10: 
+            speed_y *= -1
         ship.reset()
         ship1.reset()
-        ball.reset
+        ball.reset()
       
     display.update()
    #цикл срабатывает каждую 0.05 секунд
